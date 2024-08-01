@@ -91,16 +91,16 @@
               </div>
               <div class="modal-body">
                 <!-- formulario de creación de persona -->
-                <form class="row needs-validation">
+                <form id="formCreatePerson" class="row">
                   <!-- input nombre -->
                   <div class="mb-3 col-12">
-                    <label for="name" class="form-label">Nombre</label>
+                    <label for="name" class="form-label">Nombre *</label>
                     <input
                       type="texto"
                       class="form-control"
                       id="name"
                       placeholder="'Juan'"
-                      maxlength="40"
+                      maxlength="25"
                       minlength="2"
                       required
                       aria-describedby="name"
@@ -108,7 +108,7 @@
                   </div>
                   <!-- input DNI -->
                   <div class="mb-3 col-6">
-                    <label for="dni" class="form-label">DNI</label>
+                    <label for="dni" class="form-label">DNI *</label>
                     <input
                       type="number"
                       class="form-control"
@@ -121,7 +121,7 @@
                   </div>
                   <!-- input edad -->
                   <div class="mb-3 col-6">
-                    <label for="age" class="form-label">Edad</label>
+                    <label for="age" class="form-label">Edad *</label>
                     <input
                       type="number"
                       class="form-control"
@@ -134,12 +134,14 @@
                   <!-- input peso -->
                   <div class="col-6">
                     <div class="input-group mb-3">
-                      <label for="weight" class="form-label w-100">Peso</label>
+                      <label for="weight" class="form-label w-100"
+                        >Peso *</label
+                      >
                       <input
                         type="text"
                         class="form-control"
                         id="weight"
-                        placeholder="0.0"
+                        placeholder="0,0"
                         maxlength="8"
                         minlength="2"
                         required
@@ -151,14 +153,14 @@
                   <div class="col-6">
                     <div class="input-group mb-3">
                       <label for="height" class="form-label w-100"
-                        >Altura</label
+                        >Altura *</label
                       >
                       <input
                         type="text"
                         class="form-control"
                         id="height"
-                        placeholder="0.0"
-                        maxlength="4"
+                        placeholder="0,0"
+                        maxlength="6"
                         minlength="2"
                         required
                       />
@@ -173,15 +175,15 @@
                       id="sex"
                       aria-label="select sex"
                     >
-                      <option value="1">H</option>
-                      <option value="2">M</option>
-                      <option value="3">X</option>
+                      <option value="1">X</option>
+                      <option value="2">H</option>
+                      <option value="3">M</option>
                     </select>
                   </div>
                   <!-- input año de nacimiento -->
                   <div class="mb-3 col-6">
                     <label for="birthday" class="form-label"
-                      >Año de nacimiento</label
+                      >Año de nacimiento *</label
                     >
                     <input
                       type="number"
@@ -193,6 +195,10 @@
                       required
                     />
                   </div>
+                  <p
+                    id="formWarnings"
+                    class="col-12 my-2 text-center text-danger fw-bold"
+                  ></p>
                 </form>
               </div>
               <div class="modal-footer">
@@ -203,7 +209,13 @@
                 >
                   Cerrar
                 </button>
-                <button type="button" class="btn btn-primary">Crear</button>
+                <button
+                  id="btnSubmitForm"
+                  type="button"
+                  class="btn btn-primary"
+                >
+                  Crear
+                </button>
               </div>
             </div>
           </div>
@@ -287,6 +299,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="./js/app.js"></script>
+    <script src="./js/app.js" type="module"></script>
   </body>
 </html>
