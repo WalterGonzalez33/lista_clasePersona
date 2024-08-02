@@ -1,7 +1,12 @@
 "use strict";
 
+import Person from "./person.js";
+import { persons } from "./personData.js";
+
+
 const inputName = document.getElementById("name");
 const inputDni = document.getElementById("dni");
+const btnDni = document.getElementById('btnDni')
 const inputAge = document.getElementById("age");
 const inputWeight = document.getElementById("weight");
 const inputHeight = document.getElementById("height");
@@ -35,7 +40,7 @@ const resetStyleInput = (input) => {
 };
 
 const validateWeight = () => {
-  const numberPattern = /^\d+(\,\d{1,2})?$/;
+  const numberPattern = /^\d+(\.\d{1,2})?$/;
 
   if (inputWeight.value.length === 0) {
     formWarnings.innerHTML = "El peso es un campo obligatorio";
@@ -51,7 +56,7 @@ const validateWeight = () => {
     return false;
   }
   if (!numberPattern.test(inputWeight.value)) {
-    formWarnings.innerHTML = "A ingresado mal el peso (ej: 60,30)";
+    formWarnings.innerHTML = "A ingresado mal el peso (ej: 60.30)";
     inputDanger(inputWeight);
     inputWeight.focus();
     return false;
@@ -63,7 +68,7 @@ const validateWeight = () => {
 };
 
 const validateHeight = () => {
-  const numberPattern = /^\d+(\,\d{1,2})?$/;
+  const numberPattern = /^\d+(\.\d{1,2})?$/;
 
   if (inputHeight.value.length === 0) {
     formWarnings.innerHTML = "La altura es un campo obligatorio";
@@ -80,7 +85,7 @@ const validateHeight = () => {
   }
 
   if (!numberPattern.test(inputHeight.value)) {
-    formWarnings.innerHTML = "A ingresado mal la altura (ej: 1,70)";
+    formWarnings.innerHTML = "A ingresado mal la altura (ej: 1.70)";
     inputDanger(inputHeight);
     inputHeight.focus();
     return false;
@@ -109,6 +114,38 @@ const validateAge = () => {
   return true;
 };
 
+const validateDni = () => {
+  const dniFind = findDni(inputDni.value)
+
+  if(dniFind){
+    formWarnings.innerHTML = "El DNI ingresado ya esta registrado";
+    inputDanger(inputDni);
+    inputDni.focus();
+    return false;
+  }
+  if (inputDni.value.length === 0) {
+    formWarnings.innerHTML = "El DNI es un campo obligatorio";
+    inputDanger(inputDni);
+    inputDni.focus();
+    return false;
+  }
+  if (inputDni.value.length > 9) {
+    formWarnings.innerHTML = "El DNI no puede superar los 9 caracteres";
+    inputDanger(inputDni);
+    inputDni.focus();
+    return false;
+  }
+  if (inputDni.value.length < 7) {
+    formWarnings.innerHTML = "El DNI no puede tener menos de 7 caracteres";
+    inputDanger(inputDni);
+    inputDni.focus();
+    return false;
+  }
+
+  inputSuccess(inputDni);
+  formWarnings.innerHTML = "";
+  return true;
+}
 const validateBirthday = () => {
   if (inputBirthday.value.length === 0) {
     formWarnings.innerHTML = "El año de nacimiento es un campo obligatorio";
@@ -154,13 +191,30 @@ const validateName = () => {
   return true;
 };
 
+const findDni = (dni) => {
+  const dniFind = persons.find(person => person.data.dni == dni)
+
+  return dniFind
+}
+
+const dniGeneration = () => {
+  const personStay = new Person()
+  const randomDni = personStay.generateDni()
+  const checkDni = findDni(randomDni)
+  if(checkDni){
+    dniGeneration()
+  }
+  inputDni.value = randomDni
+}
+
 export const validateForm = () => {
   if (
     validateName() &&
     validateAge() &&
     validateWeight() &&
     validateHeight() &&
-    validateBirthday()
+    validateBirthday() &&
+    validateDni()
   ) {
     return true;
   }
@@ -174,12 +228,29 @@ export const resetForm = () => {
   resetStyleInput(inputWeight);
   resetStyleInput(inputHeight);
   resetStyleInput(inputBirthday);
+  resetStyleInput(inputDni)
 
   inputName.value = "";
   inputAge.value = "";
   inputWeight.value = "";
   inputHeight.value = "";
   inputBirthday.value = "";
+  inputDni.value = "";
+};
+
+export const dataPersonForm = () => {
+
+  const sex = inputSex.value === '1' ? "X" : inputSex.value === '2' ? "H" : "M";
+
+  return [
+    inputName.value,
+    inputAge.value,
+    inputDni.value,
+    sex,
+    inputWeight.value,
+    inputHeight.value,
+    inputBirthday.value,
+  ];
 };
 
 inputName.addEventListener("change", validateName);
@@ -187,3 +258,5 @@ inputAge.addEventListener("change", validateAge);
 inputWeight.addEventListener("change", validateWeight);
 inputHeight.addEventListener("change", validateHeight);
 inputBirthday.addEventListener("change", validateBirthday);
+inputDni.addEventListener('change', validateDni)
+btnDni.addEventListener('click', dniGeneration)
