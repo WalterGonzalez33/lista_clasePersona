@@ -17,7 +17,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css" />
     <title>Ejercicio 2</title>
   </head>
@@ -41,7 +40,12 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="./index.html"
+                  >Home</a
+                >
               </li>
             </ul>
           </div>
@@ -52,13 +56,31 @@
     <main>
       <div class="container">
         <div
-          class="d-flex flex-row justify-content-between align-items-center p-2 mt-5"
+          class="row d-flex flex-row justify-content-between align-items-center p-2 mt-5"
         >
-          <h2 class="fs-5 m-0 text-light fst-italic">
+          <h2
+            class="col-12 col-md-3 fs-5 mb-3 mb-md-0 text-light fst-italic text-center"
+          >
             Lista de personas registradas
           </h2>
+
+          <form
+            id="formSearchDni"
+            class="d-flex col-12 col-md-3 mb-3 mb-md-0"
+            role="search"
+          >
+            <input
+              id="inputSearchDni"
+              class="form-control me-2 focus-ring focus-ring-secondary border-white"
+              type="search"
+              placeholder="DNI"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-light" type="submit">Buscar</button>
+          </form>
+
           <button
-            class="fs-3 btn btn-primary"
+            class="col-12 col-md-3 fs-3 btn"
             data-bs-toggle="modal"
             data-bs-target="#createPerson"
           >
@@ -66,6 +88,38 @@
           </button>
         </div>
 
+        <!-- ventana modal de las acciones de los registros -->
+        <div
+          class="modal fade"
+          id="modalGeneration"
+          tabindex="-1"
+          aria-labelledby="modalGenerationLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalGenerationLabel"></h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div id="contentModalAction" class="modal-body"></div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Ventana modal para crear una persona -->
         <div
           class="modal fade"
@@ -109,15 +163,21 @@
                     <label for="dni" class="form-label">DNI *</label>
                     <div class="input-group mb-3">
                       <input
-                      type="number"
-                      class="form-control"
-                      id="dni"
-                      placeholder="11222333"
-                      maxlength="9"
-                      minlength="7"
-                      required
-                    />
-                      <button class="btn btn-outline-secondary" type="button" id="btnDni"><i class="bi bi-arrow-counterclockwise"></i></button>
+                        type="number"
+                        class="form-control"
+                        id="dni"
+                        placeholder="11222333"
+                        maxlength="9"
+                        minlength="7"
+                        required
+                      />
+                      <button
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        id="btnDni"
+                      >
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                      </button>
                     </div>
                   </div>
                   <!-- input edad -->
@@ -238,10 +298,16 @@
                 <th scope="col">ACCIONES</th>
               </tr>
             </thead>
-            <tbody id="tbodyPersons">
-
-            </tbody>
+            <tbody id="tbodyPersons"></tbody>
           </table>
+          <div id="dniNotFound" class="w-100 text-center mt-4">
+            <h2 class="fs-1 text-secondary-emphasis">
+              <i class="bi bi-x-circle"></i>
+            </h2>
+            <p class="fs-4 fw-bold text-secondary-emphasis">
+              DNI no encontrado
+            </p>
+          </div>
         </section>
       </div>
     </main>
@@ -254,13 +320,13 @@
       </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    
+
     <script src="./js/app.js" type="module"></script>
   </body>
 </html>

@@ -7,3 +7,13 @@ body{
 main{
     flex-grow: 1;
 }
+
+.actionCheckAge{
+    font-size: .8rem;
+}
+.actionGeneration{
+    font-size: .9rem;
+}
+#dniNotFound{
+    display: none;
+}

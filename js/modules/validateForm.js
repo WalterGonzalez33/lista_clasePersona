@@ -3,10 +3,9 @@
 import Person from "./person.js";
 import { persons } from "./personData.js";
 
-
 const inputName = document.getElementById("name");
 const inputDni = document.getElementById("dni");
-const btnDni = document.getElementById('btnDni')
+const btnDni = document.getElementById("btnDni");
 const inputAge = document.getElementById("age");
 const inputWeight = document.getElementById("weight");
 const inputHeight = document.getElementById("height");
@@ -115,9 +114,9 @@ const validateAge = () => {
 };
 
 const validateDni = () => {
-  const dniFind = findDni(inputDni.value)
+  const dniFind = findDni(inputDni.value);
 
-  if(dniFind){
+  if (dniFind) {
     formWarnings.innerHTML = "El DNI ingresado ya esta registrado";
     inputDanger(inputDni);
     inputDni.focus();
@@ -145,8 +144,9 @@ const validateDni = () => {
   inputSuccess(inputDni);
   formWarnings.innerHTML = "";
   return true;
-}
+};
 const validateBirthday = () => {
+  const yearCurrent = new Date();
   if (inputBirthday.value.length === 0) {
     formWarnings.innerHTML = "El año de nacimiento es un campo obligatorio";
     inputDanger(inputBirthday);
@@ -156,6 +156,27 @@ const validateBirthday = () => {
   if (inputBirthday.value.length > 4) {
     formWarnings.innerHTML =
       "El año de nacimiento no puede superar los 4 caracteres";
+    inputDanger(inputBirthday);
+    inputBirthday.focus();
+    return false;
+  }
+  if (inputBirthday.value.length < 4) {
+    formWarnings.innerHTML =
+      "El año de nacimiento no puede tener menos de 4 caracteres";
+    inputDanger(inputBirthday);
+    inputBirthday.focus();
+    return false;
+  }
+
+  if (inputBirthday.value > yearCurrent.getFullYear()) {
+    formWarnings.innerHTML =
+      "El año de nacimiento no puede ser mayor al año actual";
+    inputDanger(inputBirthday);
+    inputBirthday.focus();
+    return false;
+  }
+  if (inputBirthday.value < 1930) {
+    formWarnings.innerHTML = "El año de nacimiento no puede ser menor que 1930";
     inputDanger(inputBirthday);
     inputBirthday.focus();
     return false;
@@ -192,20 +213,20 @@ const validateName = () => {
 };
 
 const findDni = (dni) => {
-  const dniFind = persons.find(person => person.data.dni == dni)
+  const dniFind = persons.find((person) => person.data.dni == dni);
 
-  return dniFind
-}
+  return dniFind;
+};
 
 const dniGeneration = () => {
-  const personStay = new Person()
-  const randomDni = personStay.generateDni()
-  const checkDni = findDni(randomDni)
-  if(checkDni){
-    dniGeneration()
+  const personStay = new Person();
+  const randomDni = personStay.generateDni();
+  const checkDni = findDni(randomDni);
+  if (checkDni) {
+    dniGeneration();
   }
-  inputDni.value = randomDni
-}
+  inputDni.value = randomDni;
+};
 
 export const validateForm = () => {
   if (
@@ -228,7 +249,7 @@ export const resetForm = () => {
   resetStyleInput(inputWeight);
   resetStyleInput(inputHeight);
   resetStyleInput(inputBirthday);
-  resetStyleInput(inputDni)
+  resetStyleInput(inputDni);
 
   inputName.value = "";
   inputAge.value = "";
@@ -239,8 +260,7 @@ export const resetForm = () => {
 };
 
 export const dataPersonForm = () => {
-
-  const sex = inputSex.value === '1' ? "X" : inputSex.value === '2' ? "H" : "M";
+  const sex = inputSex.value === "1" ? "X" : inputSex.value === "2" ? "H" : "M";
 
   return [
     inputName.value,
@@ -258,5 +278,5 @@ inputAge.addEventListener("change", validateAge);
 inputWeight.addEventListener("change", validateWeight);
 inputHeight.addEventListener("change", validateHeight);
 inputBirthday.addEventListener("change", validateBirthday);
-inputDni.addEventListener('change', validateDni)
-btnDni.addEventListener('click', dniGeneration)
+inputDni.addEventListener("change", validateDni);
+btnDni.addEventListener("click", dniGeneration);
