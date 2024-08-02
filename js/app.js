@@ -33,6 +33,19 @@ const renderPersonList = () => {
     const trPerson = createRowPersonForm(person.data, index + 1);
     tbody.innerHTML += trPerson;
   });
+
+  persons.forEach((person) => {
+    const btnGeneration = document.getElementById(person.data.dni)
+    const btnCheckAge = document.getElementById((person.data.dni) + 1)
+  
+    btnGeneration.addEventListener('click', () => {
+        Swal.fire(person.showGeneration());
+    })
+    btnCheckAge.addEventListener('click', () => {
+        const isOlder = person.isOlder()
+        Swal.fire(isOlder.message);
+    })
+  })
 };
 
 // fn del evento submit del formulario
